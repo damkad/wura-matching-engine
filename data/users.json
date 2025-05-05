@@ -1,8 +1,12 @@
 [
   {
-    "id": "u01",
-    "name": "Mira",
-    "location": "Manila",
-    "needs": "I’m looking for items for my baby and hygiene kits for women."
+    "name": "Amina",
+    "needs": "school shoes for my daughter and a backpack",
+    "location": [6.5244, 3.3792]  // Lagos, Nigeria (lat, lon)
+  },
+  {
+    "name": "Zainab",
+    "needs": "kitchen utensils and cooking pots",
+    "location": [9.0579, 7.4951]  // Abuja, Nigeria
   }
 ]
