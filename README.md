@@ -1,4 +1,4 @@
-# Wura Matching Engine (Open Source)
+# Wura Matching Engine
 
 This is an AI-powered matching engine to connect donated items with users in need. It uses basic NLP techniques (TF-IDF + cosine similarity) to recommend relevant items based on user queries.
 
