@@ -1,20 +1,26 @@
 [
   {
-    "id": 1,
-    "title": "Baby clothes bundle",
-    "description": "Gently used clothes for infants aged 0-12 months.",
-    "location": "Quezon City"
+    "title": "Children’s School Shoes",
+    "description": "Gently used black leather school shoes for girls, size 2.",
+    "location": [6.5200, 3.3750],
+    "owner_rating": 4.8
   },
   {
-    "id": 2,
-    "title": "Reusable sanitary pads",
-    "description": "Eco-friendly menstrual products available for pickup.",
-    "location": "Pasig"
+    "title": "Backpack with Zipper",
+    "description": "Durable school backpack with cartoon print, good for ages 5-10.",
+    "location": [6.5230, 3.3800],
+    "owner_rating": 4.5
   },
   {
-    "id": 3,
-    "title": "School backpacks",
-    "description": "Sturdy bags ideal for elementary school children.",
-    "location": "Manila"
+    "title": "Set of Cooking Pots",
+    "description": "3 aluminum pots and 1 non-stick frying pan. Used but in good condition.",
+    "location": [9.0600, 7.4900],
+    "owner_rating": 4.2
+  },
+  {
+    "title": "Old Toys and Books",
+    "description": "Soft toys and early learning books for kids aged 3-6.",
+    "location": [6.6000, 3.4000],
+    "owner_rating": 4.0
   }
 ]
