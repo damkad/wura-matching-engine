@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Baby clothes bundle",
+    "description": "Gently used clothes for infants aged 0-12 months.",
+    "location": "Quezon City"
+  },
+  {
+    "id": 2,
+    "title": "Reusable sanitary pads",
+    "description": "Eco-friendly menstrual products available for pickup.",
+    "location": "Pasig"
+  },
+  {
+    "id": 3,
+    "title": "School backpacks",
+    "description": "Sturdy bags ideal for elementary school children.",
+    "location": "Manila"
+  }
+]
