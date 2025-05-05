@@ -1,7 +1,10 @@
 import json
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from sentence_transformers import SentenceTransformer, util
+from geopy.distance import geodesic
+
+# Load transformer model
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
 def load_data(items_file='data/items.json', users_file='data/users.json'):
     with open(items_file) as f:
@@ -10,23 +13,34 @@ def load_data(items_file='data/items.json', users_file='data/users.json'):
         users = json.load(f)
     return items, users
 
+def haversine_score(user_loc, item_loc):
+    distance_km = geodesic(user_loc, item_loc).km
+    return np.exp(-distance_km / 20)  # Penalize based on distance
+
+def trust_score(rating, max_rating=5.0):
+    return rating / max_rating  # Normalize
+
 def match_items_to_user(user, items, top_k=5):
-    """
-    Matches a user's needs to available items using TF-IDF and cosine similarity.
-    Returns top_k matched items.
-    """
-    user_query = user["needs"]
-    item_texts = [item["title"] + " " + item["description"] for item in items]
-    
-    corpus = [user_query] + item_texts
-    vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = vectorizer.fit_transform(corpus)
+    user_embedding = model.encode(user["needs"], convert_to_tensor=True)
+    user_location = tuple(user["location"])
 
-    # Get cosine similarities between user query and each item
-    cosine_scores = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:]).flatten()
-    top_indices = np.argsort(cosine_scores)[::-1][:top_k]
+    scores = []
+    for item in items:
+        item_text = item["title"] + " " + item["description"]
+        item_embedding = model.encode(item_text, convert_to_tensor=True)
+        semantic_score = float(util.cos_sim(user_embedding, item_embedding))
 
-    return [items[i] for i in top_indices]
+        distance_weight = haversine_score(user_location, tuple(item["location"]))
+        rating_weight = trust_score(item.get("owner_rating", 3.0))
+
+        # Combine scores with adjustable weights
+        combined_score = 0.6 * semantic_score + 0.25 * distance_weight + 0.15 * rating_weight
+        scores.append((combined_score, item))
+
+    # Sort by highest combined score
+    top_matches = sorted(scores, key=lambda x: x[0], reverse=True)[:top_k]
+    return [match[1] for match in top_matches]
+
 
 if __name__ == "__main__":
     items, users = load_data()
